@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import axios from "axios";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +10,7 @@ class App extends React.Component {
       seed: ""
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -17,8 +19,13 @@ class App extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  async handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('api/battle_characters', { characters: [this.state.fighter1, this.state.fighter2], seed: this.state.seed });
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -40,7 +47,10 @@ class App extends React.Component {
           <input type="number" min="1" max="9" name="seed" onChange={this.handleChange} />
         </div>
         <div>
-          <input type="submit" onSubmit={this.handleSubmit} />
+          <button onClick={this.handleSubmit}>Submit</button>
+        </div>
+        <div>
+          Data provided by Marvel. © 2014 Marvel
         </div>
       </div>
     );
