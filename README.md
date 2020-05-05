@@ -1,24 +1,19 @@
-# README
+# Marvel Combat Arena
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Rails App that pits two user selected characters against each other
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+Clone this repo then run bundle install and yarn install in root
 
-* System dependencies
+This app expects MARVEL_PUBLIC_KEY and MARVEL_PRIVATE_KEY environment variables.  These can bet set in a .env file in root.
 
-* Configuration
+Run rails s and then head to localhost:3000.
 
-* Database creation
+Ruby 2.7.1 is required
 
-* Database initialization
+Use master branch.
 
-* How to run the test suite
+## Assumptions
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This app assumes a few things when comparing fighters.  word lengths are compared without punctation.  If word lengths are the same the result is a tie.  For automatic win words if both characters have them the result is a tie.  If a character does not have a description or the description is fewer words than the seed number, the character with a word at that position wins, otherwise if both don't it's a tie.

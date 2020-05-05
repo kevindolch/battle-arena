@@ -5,7 +5,7 @@ class Api::MarvelController < ApplicationController
       character_list = character_exact(character_name)
       character_list = character_fuzzy(character_name) if character_list.length == 0
       character_list.map do |character|
-        { id: character["id"], name: character["name"], description: character["description"], thumbnail: character["thumbnail"] }
+        { id: character["id"], name: character["name"], description: character["description"], thumbnail: character["thumbnail"], url: character["urls"].first["url"] }
       end
     end
     render json: { characters: characters }, status: :ok
