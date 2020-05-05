@@ -27,7 +27,7 @@ label {
 
 input {
   font-family: inherit;
-  width: 250px;
+  width: 100%;
   border: 0;
   border-bottom: 2px solid grey;
   outline: 0;
@@ -141,4 +141,31 @@ input {
 .item:hover {
   color: darken(#006ac3, 10%);
   cursor: pointer;
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  color: white;
+  padding-top: 35px;
+  text-align: center;
+  background-color: #FF9494;
+}
+
+.seed {
+  position: relative;
+  width: 50px;
+  margin: 0 auto;
+}
+
+.main-with-error {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  bottom: 85px;
+  width: 100%;
+  overflow: auto;
 }

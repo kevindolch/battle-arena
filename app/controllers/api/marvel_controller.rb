@@ -1,6 +1,6 @@
 class Api::MarvelController < ApplicationController
 
-  def battle_characters
+  def characters
     characters = character_params[:characters].map do |character_name|
       character_list = character_exact(character_name)
       character_list = character_fuzzy(character_name) if character_list.length == 0
