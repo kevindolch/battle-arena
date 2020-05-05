@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'ComicBook';
+  font-style: normal;
+  font-weight: normal;
+  src: local('ComicBook'), url('../fonts/ComicBook.otf') format('opentype');
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.helper-text {
+  font-family: "ComicBook";
+  text-align: center;
+  font-size: 24px;
+  padding: 20px;
+}
+
+label {
+  font-family: inherit;
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 10px;
+}
+
+input {
+  font-family: inherit;
+  width: 250px;
+  border: 0;
+  border-bottom: 2px solid grey;
+  outline: 0;
+  font-size: 16px;
+  padding: 15px 0px 0px;
+  background: transparent;
+  &::placeholder {
+    font-size: 16px;
+  }
+  &:placeholder-shown ~ label {
+    visibility: hidden;
+    font-size: 16px;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+input:focus {
+  &::placeholder{
+    color: transparent
+  }
+  ~ label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 12px;
+    font-weight:700;
+    visibility: visible;
+  }
+}
+
+input {
+  &:required,&:invalid { box-shadow:none; }
+}
+
+.fighter {
+  position: relative;
+  width: 250px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.fighters {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+
+.button {
+  font-family: inherit;
+  font-size: 14px;
+  display: block;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #5390d1;
+  margin: 10px auto;
+}
+
+.button:hover {
+  background-color: darken( #5390d1, 10%);
+}
+
+.button:disabled {
+  background-color: lighten( #5390d1, 20%);
+  cursor: not-allowed;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 85px;
+  width: 100%;
+  overflow: auto;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  color: white;
+  padding-top: 35px;
+  text-align: center;
+  background-color: rgb(21,21,21);
+}
+
+.character-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.character-box {
+  padding: 0 10px;
+  width: 35%;
+}
+
+.list {
+  list-style: none;
+}
+
+.item {
+  color: #006ac3;
+}
+
+.item:hover {
+  color: darken(#006ac3, 10%);
+  cursor: pointer;
+}

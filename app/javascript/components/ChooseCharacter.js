@@ -2,11 +2,11 @@ import React from "react"
 
 const ChooseCharacter = (props) => {
   const names = props.matches.map((m, i) => (
-    <li onClick={() => props.handleSelectMatch(props.index, i)} value={i} key={m.id}>{m.name}</li>
+    <li key={m.id}><span className="item" onClick={() => props.handleSelectMatch(props.index, i)} value={i}>{m.name}</span></li>
   ));
-  return <div>
+  return <div className="character-box">
     <div>Your search did not return an exact match.  Did you mean one of the following?</div>
-    <ul>{names}</ul>
+    <ul className="list">{names}</ul>
   </div>
 };
 
