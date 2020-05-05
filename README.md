@@ -16,4 +16,4 @@ Use master branch.
 
 ## Assumptions
 
-This app assumes a few things when comparing fighters.  word lengths are compared without punctation.  If word lengths are the same the result is a tie.  For automatic win words if both characters have them the result is a tie.  If a character does not have a description or the description is fewer words than the seed number, the character with a word at that position wins, otherwise if both don't it's a tie.
+This app assumes a few things when comparing fighters.  word lengths are compared without punctuation.  If word lengths are the same the result is a tie.  For automatic win words if both characters have them the result is a tie.  If a character does not have a description or the description is fewer words than the seed number, the character with a word at that position wins, otherwise if both don't it's a tie.
