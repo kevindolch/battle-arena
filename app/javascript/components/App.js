@@ -135,7 +135,7 @@ export default class App extends React.Component {
             </div>
           </div>
           <div>
-            <button className="button" onClick={this.handleSubmit}>Search</button>
+            <button className="button" disabled={disabled} onClick={this.handleSubmit}>Search</button>
           </div>
           <div className="character-container">
             {characters}
