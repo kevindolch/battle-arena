@@ -38,15 +38,22 @@ export default class App extends React.Component {
       const { data } = await axios.get('api/characters', { params: { characters: [this.state.fighter1, this.state.fighter2] } });
       this.setState({ characters: data.characters });
     } catch(error) {
-      console.log(error);
+      const err = error
+      debugger
       this.setState( {errorMessage: "Something went wrong.  We're looking into it"})
     }
   }
 
-  handleFight(e) {
+  async handleFight(e) {
     e.preventDefault();
-    const winner = this.determineWinner();
-    this.setState({ winner })
+    try {
+      const { data } = await axios.post('api/fight', { seed: this.state.seed, character_1: this.state.characters[0][0], character_2: this.state.characters[1][0]});
+      this.setState({ winner: data.winner });
+    } catch(error) {
+      const err = error
+      debugger
+      this.setState( {errorMessage: "Something went wrong.  We're looking into it"})
+    }
   }
 
   handleSelectMatch(outerIndex, innerIndex) {
@@ -56,51 +63,6 @@ export default class App extends React.Component {
       characters[outerIndex] = [selectedCharacter];
       return { characters };
     });
-  }
-
-  determineWinner() {
-    const seed = parseInt(this.state.seed, 10);
-    const character1 = this.state.characters[0][0];
-    const character2 = this.state.characters[1][0];
-    const description1 = character1.description;
-    const description2 = character2.description;
-    const words1 = description1.split(" ");
-    const words2 = description2.split(" ");
-
-    if (words1.length < seed && words2.length >= seed) {
-      return character2.name;
-    }
-    if (words2.length < seed && words1.length >= seed) {
-      return character1.name;
-    }
-    if (words1.length < seed && words2.length < seed) {
-      return "tie";
-    }
-
-    const rawWord1 = words1[seed-1];
-    const rawWord2 = words2[seed-1];
-    // gets rid of punctation and normalizes capitalization
-    const word1 = rawWord1.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
-    const word2 = rawWord2.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase();
-
-    if (word1 === "gamma" || word1 === "radioactive") {
-      if (word2 === "gamma" || word2 === "radioactive")  {
-        return "tie";
-      }
-      return character1.name;
-    }
-
-    if (word2 === "gamma" || word2 === "radioactive") {
-      return character2.name;
-    }
-
-    if(word1.length > word2.length) {
-      return character1.name;
-    }
-    if (word2.length > word1.length) {
-      return character2.name;
-    }
-    return "tie"
   }
 
   render() {
