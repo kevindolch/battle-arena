@@ -12,7 +12,7 @@ Run rails s and then head to localhost:3000.
 
 Ruby 2.7.1 is required
 
-Use master branch.
+Use master branch for base project.  Use record-wins-losses for fight leaderboards.  This will require a database migration.
 
 ## Assumptions
 
