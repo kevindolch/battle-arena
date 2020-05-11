@@ -1,8 +1,18 @@
 class Character < ApplicationRecord
   validates_presence_of :name
-  has_many :matches
 
   MAGIC_WORDS = ["gamma", "radioactive"].freeze
+
+  def self.match_records(limit = 10)
+    self.joins("join matches on (matches.character_1_id = characters.id or matches.character_2_id = characters.id)")
+    .group(:name)
+    .select("characters.id, characters.name,
+            sum(case when (characters.id = matches.character_1_id and matches.result = 0) || (characters.id = matches.character_2_id and matches.result = 1) then 1 else 0 end) as wins,
+            sum(case when (characters.id = matches.character_1_id and matches.result = 1) || (characters.id = matches.character_2_id and matches.result = 0) then 1 else 0 end) as losses,
+            sum(case when matches.result = 2 then 1 else 0 end) as ties")
+    .order("wins desc")
+    .limit(limit)
+  end
 
   def fight(character_2, seed)
     description_2 = character_2.description

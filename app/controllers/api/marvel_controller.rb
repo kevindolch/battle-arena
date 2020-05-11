@@ -26,8 +26,15 @@ class Api::MarvelController < ApplicationController
 
     Match.create(character_1_id: character_1.id, character_2_id: character_2.id, result: result)
     render json: { result: result }, status: :ok
-  # rescue StandardError => error
-  #   render json: { error: error }, status: :bad_request
+  rescue StandardError => error
+    render json: { error: error }, status: :bad_request
+  end
+
+  def fight_records
+    records = Character.match_records
+    render json: { records: records }, status: :ok
+  rescue StandardError => error
+    render json: { error: error }, status: :bad_request
   end
 
   private

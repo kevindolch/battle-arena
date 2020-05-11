@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Character from "./Character";
 import ChooseCharacter from "./ChooseCharacter";
+import Leaderboard from "./Leaderboard";
 import "../stylesheets/App.scss"
 
 export default class App extends React.Component {
@@ -12,12 +13,17 @@ export default class App extends React.Component {
       fighter2: "",
       seed: "",
       characters: [],
-      winner: ""
+      winner: "",
+      records: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectMatch = this.handleSelectMatch.bind(this);
     this.handleFight = this.handleFight.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadRecords();
   }
 
   handleChange(e) {
@@ -34,7 +40,7 @@ export default class App extends React.Component {
     e.preventDefault();
     this.setState({ seed: "", winner: "", errorMessage: null });
     try {
-      const { data } = await axios.get('api/characters', { params: { characters: [this.state.fighter1, this.state.fighter2] } });
+      const { data } = await axios.put('api/characters', { characters: [this.state.fighter1, this.state.fighter2] });
       this.setState({ characters: data.characters });
     } catch(error) {
       this.setState( {errorMessage: "Something went wrong.  We're looking into it"});
@@ -53,7 +59,7 @@ export default class App extends React.Component {
       } else {
         winner = "tie";
       }
-      this.setState({ winner });
+      this.setState({ winner }, this.loadRecords);
     } catch(error) {
       this.setState( {errorMessage: "Something went wrong.  We're looking into it"});
     }
@@ -66,6 +72,15 @@ export default class App extends React.Component {
       characters[outerIndex] = [selectedCharacter];
       return { characters };
     });
+  }
+
+  async loadRecords() {
+    try {
+      const { data } = await axios.get('api/fight_records');
+      this.setState({ records: data.records });
+    } catch(error) {
+      this.setState( {errorMessage: "Something went wrong.  We're looking into it"});
+    }
   }
 
   render() {
@@ -120,6 +135,7 @@ export default class App extends React.Component {
             </div>}
             {this.state.winner.length > 0 &&
               <div className="helper-text">{this.state.winner === "tie" ? "The fighters are evenly matched" : `${this.state.winner} wins`}</div>}
+            <Leaderboard records={this.state.records}/>
           </div>
           <div className="footer">
             Data provided by Marvel. © 2014 Marvel
