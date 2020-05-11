@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const ChooseCharacter = (props) => {
   const names = props.matches.map((m, i) => (

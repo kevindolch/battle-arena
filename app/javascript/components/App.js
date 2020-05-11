@@ -1,5 +1,4 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
 import axios from "axios";
 import Character from "./Character";
 import ChooseCharacter from "./ChooseCharacter";
@@ -14,7 +13,7 @@ export default class App extends React.Component {
       seed: "",
       characters: [],
       winner: ""
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectMatch = this.handleSelectMatch.bind(this);
@@ -33,26 +32,30 @@ export default class App extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    this.setState({ seed: "", winner: "", errorMessage: null })
+    this.setState({ seed: "", winner: "", errorMessage: null });
     try {
       const { data } = await axios.get('api/characters', { params: { characters: [this.state.fighter1, this.state.fighter2] } });
       this.setState({ characters: data.characters });
     } catch(error) {
-      const err = error
-      debugger
-      this.setState( {errorMessage: "Something went wrong.  We're looking into it"})
+      this.setState( {errorMessage: "Something went wrong.  We're looking into it"});
     }
   }
 
   async handleFight(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.post('api/fight', { seed: this.state.seed, character_1: this.state.characters[0][0], character_2: this.state.characters[1][0]});
-      this.setState({ winner: data.winner });
+      const { data } = await axios.post('api/fight', { seed: this.state.seed, id_1: this.state.characters[0][0].id, id_2: this.state.characters[1][0].id});
+      let winner;
+      if (data.result === "character_1_wins") {
+        winner = this.state.characters[0][0].name;
+      } else if (data.result === "character_2_wins") {
+        winner = this.state.characters[1][0].name;
+      } else {
+        winner = "tie";
+      }
+      this.setState({ winner });
     } catch(error) {
-      const err = error
-      debugger
-      this.setState( {errorMessage: "Something went wrong.  We're looking into it"})
+      this.setState( {errorMessage: "Something went wrong.  We're looking into it"});
     }
   }
 
